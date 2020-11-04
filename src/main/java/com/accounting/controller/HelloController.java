@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
-@RequestMapping("v1/users")
+@RequestMapping("v1/hello")
 public class HelloController {
     AtomicLong atomicLong = new AtomicLong();
 
