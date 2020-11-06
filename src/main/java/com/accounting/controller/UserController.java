@@ -5,6 +5,7 @@ import com.accounting.exception.InvalidParameterException;
 import com.accounting.manager.UserInfoManager;
 import com.accounting.model.service.UserInfo;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("v1/users")
+@RequestMapping("v1.0/users")
 @Slf4j
 public class UserController {
     private final UserInfoManager userInfoManager;
@@ -31,6 +32,7 @@ public class UserController {
         if (userId == null || userId <= 0) {
             throw new InvalidParameterException(String.format("This user id %s is invalid", userId));
         }
-        return ResponseEntity.ok(userInfoC2SConverter.convert(userInfoManager.getUserInfoByUserId(userId)));
+        val userInfo = userInfoManager.getUserInfoByUserId(userId);
+        return ResponseEntity.ok(userInfoC2SConverter.convert(userInfo));
     }
 }

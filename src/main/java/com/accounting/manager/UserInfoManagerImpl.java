@@ -5,7 +5,6 @@ import com.accounting.dao.UserInfoDAO;
 import com.accounting.exception.ResourceNotFoundException;
 import com.accounting.model.common.UserInfo;
 import lombok.val;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

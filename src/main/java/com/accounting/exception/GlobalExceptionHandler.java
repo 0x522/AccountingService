@@ -6,11 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice//RESTful控制器增强
+@RestControllerAdvice//RESTful风格控制器增强
 public class GlobalExceptionHandler {
 
     //DRY: Don't repeat yourself
     @ExceptionHandler(ServiceException.class)
+    //@ExceptionHandler可以抓住controller层抛出的异常
     ResponseEntity<?> handleServiceException(ServiceException e) {
         val errorResponse = ErrorResponse.builder()
                 .code(e.getErrorCode())
