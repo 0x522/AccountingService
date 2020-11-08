@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
+ * a class towards Controller.
  * 对应Controller层结构
  */
 @Data

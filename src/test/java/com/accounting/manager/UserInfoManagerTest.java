@@ -1,7 +1,7 @@
 package com.accounting.manager;
 
 import com.accounting.converter.p2c.UserInfoP2CConverter;
-import com.accounting.dao.UserInfoDAO;
+import com.accounting.dao.UserInfoDao;
 import com.accounting.exception.ResourceNotFoundException;
 import com.accounting.model.persistence.UserInfo;
 import lombok.val;
@@ -24,7 +24,7 @@ class UserInfoManagerTest {
     private UserInfoManager userInfoManager;
 
     @Mock
-    private UserInfoDAO userInfoDAO;
+    private UserInfoDao userInfoDAO;
 
 
     @BeforeEach

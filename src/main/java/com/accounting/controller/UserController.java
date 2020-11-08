@@ -21,16 +21,24 @@ public class UserController {
     private final UserInfoC2SConverter userInfoC2SConverter;
 
     @Autowired
-    public UserController(final UserInfoC2SConverter userInfoC2SConverter, final UserInfoManager userInfoManager) {
+    public UserController(final UserInfoC2SConverter userInfoC2SConverter,
+                          final UserInfoManager userInfoManager) {
         this.userInfoManager = userInfoManager;
         this.userInfoC2SConverter = userInfoC2SConverter;
     }
 
+    /**
+     * Get response entity from a user id.
+     *
+     * @param userId a user id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<UserInfo> getUserInfoByUserId(@PathVariable("id") Long userId) {
         log.debug("Get user info by user id {}", userId);
         if (userId == null || userId <= 0) {
-            throw new InvalidParameterException(String.format("This user id %s is invalid", userId));
+            throw new InvalidParameterException(String
+                    .format("This user id %s is invalid", userId));
         }
         val userInfo = userInfoManager.getUserInfoByUserId(userId);
         return ResponseEntity.ok(userInfoC2SConverter.convert(userInfo));

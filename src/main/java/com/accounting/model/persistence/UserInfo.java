@@ -1,5 +1,6 @@
 package com.accounting.model.persistence;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +9,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * 对应数据库表结构
+ * a class towards Persistence.
+ * 对应数据库表结构.
  */
 //不用写getter/setter
 @Data

@@ -17,17 +17,18 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class UserInfoDAOTest {
+class UserInfoDaoTest {
     @Mock
     private UserInfoMapper userInfoMapper;
 
     @InjectMocks //将@Mock的实例注入到注解@InjectMocks对象中，这是一个实例对象
-    private UserInfoDAOImpl userInfoDAO;
+    private UserInfoDaoImpl userInfoDAO;
 
     @BeforeEach
     void setUp() {
 //        MockitoAnnotations.initMocks(this); 注解ExtendWith(MockitoExtension.class)可以省略初始化Mock
-//        userInfoDAO = new UserInfoDAOImpl(userInfoMapper);
+//        userInfoDAO = new UserInfoDaoImpl(userInfoMapper);
+        System.out.println("中文");
     }
 
     @Test

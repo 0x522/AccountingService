@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @NoArgsConstructor
-public class UserInfoP2CConverter extends Converter<com.accounting.model.persistence.UserInfo, com.accounting.model.common.UserInfo> {
+public class UserInfoP2CConverter
+        extends
+        Converter<com.accounting.model.persistence.UserInfo, com.accounting.model.common.UserInfo> {
 
     @Override
     protected com.accounting.model.common.UserInfo doForward(UserInfo userInfo) {

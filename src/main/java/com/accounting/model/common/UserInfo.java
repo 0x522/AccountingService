@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * a class towards Manager.
  * 对应Manager层结构
  **/
 @Data
