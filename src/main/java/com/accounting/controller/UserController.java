@@ -1,9 +1,11 @@
 package com.accounting.controller;
 
+
 import com.accounting.converter.c2s.UserInfoC2SConverter;
 import com.accounting.exception.InvalidParameterException;
 import com.accounting.manager.UserInfoManager;
 import com.accounting.model.service.UserInfo;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("v1.0/users")
@@ -34,11 +38,12 @@ public class UserController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity<UserInfo> getUserInfoByUserId(@PathVariable("id") Long userId) {
+    @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
+    public @NotNull ResponseEntity<UserInfo> getUserInfoByUserId(@PathVariable("id") @NotNull Long userId) {
         log.debug("Get user info by user id {}", userId);
-        if (userId == null || userId <= 0) {
+        if (userId <= 0L) {
             throw new InvalidParameterException(String
-                    .format("This user id %s is invalid", userId));
+                .format("This user id %s is invalid", userId));
         }
         val userInfo = userInfoManager.getUserInfoByUserId(userId);
         return ResponseEntity.ok(userInfoC2SConverter.convert(userInfo));

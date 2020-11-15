@@ -4,7 +4,6 @@ import com.accounting.converter.p2c.UserInfoP2CConverter;
 import com.accounting.dao.UserInfoDao;
 import com.accounting.exception.ResourceNotFoundException;
 import com.accounting.model.common.UserInfo;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,10 +23,10 @@ public class UserInfoManagerImpl implements UserInfoManager {
 
     @Override
     public UserInfo getUserInfoByUserId(Long userId) {
-        val userInfo = Optional
+        return Optional
             .ofNullable(userInfoDao.getUserInfoById(userId))
-            .orElseThrow(() -> new ResourceNotFoundException(String
-                .format("User %s was not found", userId)));
-        return userInfoP2CConverter.convert(userInfo);
+            .map(userInfoP2CConverter::convert)
+            .orElseThrow(() -> new ResourceNotFoundException(
+                String.format("User %s was not found", userId)));
     }
 }

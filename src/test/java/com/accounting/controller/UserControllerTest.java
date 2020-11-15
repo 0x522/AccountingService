@@ -16,9 +16,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,9 +40,9 @@ class UserControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders
-                .standaloneSetup(userController)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build();
+            .standaloneSetup(userController)
+            .setControllerAdvice(new GlobalExceptionHandler())
+            .build();
     }
 
     @AfterEach
@@ -56,24 +58,24 @@ class UserControllerTest {
         val userId = 100L;
         val username = "hardcore";
         val password = "hardcore";
-        val userInfoInCommon = UserInfo.builder()
-                .id(userId)
-                .username(username)
-                .password(password)
-                .build();
-        val userInfoInService = com.accounting.model.service.UserInfo.builder()
-                .id(userId)
-                .username(username)
-                .password(password)
-                .build();
+        UserInfo userInfoInCommon = UserInfo.builder()
+            .id(userId)
+            .username(username)
+            .password(password)
+            .build();
+        com.accounting.model.service.UserInfo userInfoInService = com.accounting.model.service.UserInfo.builder()
+            .id(userId)
+            .username(username)
+            .password(password)
+            .build();
         //Act
         doReturn(userInfoInCommon).when(userInfoManager).getUserInfoByUserId(anyLong());
         doReturn(userInfoInService).when(userInfoC2SConverter).convert(userInfoInCommon);
         //Assert
         mockMvc.perform(get("/v1.0/users/" + userId))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(content().string("{\"id\":100,\"username\":\"hardcore\",\"password\":\"hardcore\"}"));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/json"))
+            .andExpect(content().string("{\"id\":100,\"username\":\"hardcore\",\"password\":\"hardcore\"}"));
 
         verify(userInfoManager).getUserInfoByUserId(anyLong());
         verify(userInfoC2SConverter).convert(userInfoInCommon);
@@ -84,13 +86,15 @@ class UserControllerTest {
         //Arrange
         val userId = -100L;
         doThrow(new ResourceNotFoundException(String.format("User %s was not found", userId)))
-                .when(userInfoManager)
-                .getUserInfoByUserId(anyLong());
+            .when(userInfoManager)
+            .getUserInfoByUserId(anyLong());
         //Act
         //Assert
         mockMvc.perform(get("/v1.0/users/" + userId))
-                .andExpect(status().is4xxClientError())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(content().string("{\"code\":\"INVALID_PARAMETER\",\"errorType\":\"Client\",\"message\":\"This user id -100 is invalid\",\"statuscode\":400}"));
+            .andExpect(status().is4xxClientError())
+            .andExpect(content().contentType("application/json"))
+            .andExpect(content().string(
+                "{\"code\":\"INVALID_PARAMETER\",\"errorType\":\"Client\",\"message\":\"This user id -100 is invalid\",\"statuscode\":400}"));
+        verify(userInfoManager, never()).getUserInfoByUserId(anyLong());
     }
 }

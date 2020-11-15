@@ -28,7 +28,6 @@ class UserInfoDaoTest {
     void setUp() {
 //        MockitoAnnotations.initMocks(this); 注解ExtendWith(MockitoExtension.class)可以省略初始化Mock
 //        userInfoDAO = new UserInfoDaoImpl(userInfoMapper);
-        System.out.println("中文");
     }
 
     @Test
@@ -47,7 +46,7 @@ class UserInfoDaoTest {
                 .build();
         doReturn(userInfo).when(userInfoMapper).getUserInfoByUserId(userId);
         //Act
-        val result = userInfoDAO.getUserInfoById(userId);
+        UserInfo result = userInfoDAO.getUserInfoById(userId);
         //Assert
         assertEquals(userInfo, result);
 

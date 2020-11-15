@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 
+
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
@@ -43,25 +44,25 @@ class UserInfoManagerTest {
         val createTime = LocalDate.now();
 
         val userInfo = UserInfo.builder()
-                .id(userId)
-                .username(username)
-                .password(password)
-                .createTime(createTime)
-                .build();
+            .id(userId)
+            .username(username)
+            .password(password)
+            .createTime(createTime)
+            .build();
         doReturn(userInfo).when(userInfoDAO).getUserInfoById(userId);
         //Act
-        val result = userInfoManager.getUserInfoByUserId(userId);
+        com.accounting.model.common.UserInfo result = userInfoManager.getUserInfoByUserId(userId);
 
-//        //Junit5 Assert
+//        Junit5 Assert
 //        assertEquals(userId, result.getId());
 //        assertEquals("hardcore", result.getUsername());
 //        assertEquals("hardcore", result.getPassword());
 
         //AssertJ
         assertThat(result).isNotNull()
-                .hasFieldOrPropertyWithValue("id", userId)
-                .hasFieldOrPropertyWithValue("username", username)
-                .hasFieldOrPropertyWithValue("password", password);
+            .hasFieldOrPropertyWithValue("id", userId)
+            .hasFieldOrPropertyWithValue("username", username)
+            .hasFieldOrPropertyWithValue("password", password);
         verify(userInfoDAO).getUserInfoById(eq(userId));
     }
 

@@ -37,14 +37,14 @@ class UserInfoC2SConverterTest {
         val userId = 100L;
         val username = "hardcore";
         val password = "hardcore";
-        val userInfoInService = com.accounting.model.service.UserInfo
+        com.accounting.model.service.UserInfo userInfoInService = com.accounting.model.service.UserInfo
                 .builder()
                 .id(userId)
                 .username(username)
                 .password(password)
                 .build();
         //Act
-        val result = userInfoC2SConverter.reverse().convert(userInfoInService);
+        UserInfo result = userInfoC2SConverter.reverse().convert(userInfoInService);
         //Assert
         assertThat(result).isNotNull()
                 .hasFieldOrPropertyWithValue("id", userId)
